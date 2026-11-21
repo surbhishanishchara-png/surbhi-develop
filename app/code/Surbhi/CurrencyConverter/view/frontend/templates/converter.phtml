@@ -1,0 +1,58 @@
+<?php
+/** @var \Surbhi\CurrencyConverter\Block\Converter $block */
+$urls = $block->getApiUrls();
+?>
+<div class="currency-converter" id="surbhi-currency-converter" data-config="<?= $block->escapeHtmlAttr(json_encode($urls, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)) ?>">
+    <div class="converter-heading">
+        <h1><?= $block->escapeHtml(__('Currency Exchange converter')) ?></h1>
+        <p><?= $block->escapeHtml(__('Check reference exchange rates and history of it')) ?></p>
+    </div>
+    <div class="converter-panel">
+        <div class="converter-fields">
+            <div class="currency-field">
+                <label for="cc-amount"><?= $block->escapeHtml(__('Amount')) ?></label>
+                <input id="cc-amount" type="number" min="0" step="any" value="1" inputmode="decimal">
+            </div>
+            <div class="currency-field">
+                <label for="cc-from"><?= $block->escapeHtml(__('From')) ?></label>
+                <select id="cc-from"><option value="USD">USD</option></select>
+            </div>
+            <button type="button" id="cc-swap" class="cc-swap" aria-label="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>" title="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>">⇄</button>
+            <div class="currency-field">
+                <label for="cc-to"><?= $block->escapeHtml(__('To')) ?></label>
+                <select id="cc-to"><option value="EUR">EUR</option></select>
+            </div>
+        </div>
+        <div class="converter-result" aria-live="polite">
+            <div class="cc-result-label" id="cc-result-label"><?= $block->escapeHtml(__('1 USD equals')) ?></div>
+            <div class="cc-result-value" id="cc-result-value">—</div>
+            <div class="cc-rate" id="cc-rate"></div>
+            <div class="cc-date" id="cc-date"></div>
+        </div>
+        <div class="cc-error" id="cc-error" role="alert" hidden></div>
+    </div>
+    <section class="converter-history">
+        <div class="history-heading">
+            <div><h2><?= $block->escapeHtml(__('Exchange rate history')) ?></h2><p id="cc-chart-caption"></p></div>
+            <label class="period-label" for="cc-period"><?= $block->escapeHtml(__('Period')) ?></label>
+            <select id="cc-period">
+                <option value="30">30 days</option>
+                <option value="90">90 days</option>
+                <option value="180">180 days</option>
+                <option value="365">1 year</option>
+            </select>
+        </div>
+        <div class="cc-chart-wrap">
+            <svg id="cc-chart" viewBox="0 0 900 300" role="img" aria-label="Exchange rate history chart">
+                <text x="450" y="150" text-anchor="middle">Loading chart…</text>
+            </svg>
+        </div>
+        <p class="cc-disclaimer">
+            <?= $block->escapeHtml(__('Exchange Rates are sourced from the Frankfurter API and updated on working days; the latest date may not be today')) ?>
+        </p>
+    </section>
+    <div class="cc-source">Exchange-rate data: <a href="https://frankfurter.dev" target="_blank" rel="noopener noreferrer">Frankfurter API</a></div>
+</div>
+<script type="text/x-magento-init">
+{"#surbhi-currency-converter":{"Surbhi_CurrencyConverter/js/converter":{}}}
+</script>
